@@ -8,15 +8,15 @@ export function createModalUi(ctx: ContentScriptContext) {
     anchor: 'body',
     onMount: (container) => {
       const dialog = document.createElement('dialog')
-      dialog.className = 'ces-addon-modal'
+      dialog.className = 'cpp-addon-modal'
 
       // Create modal content wrapper
       const modalContent = document.createElement('div')
-      modalContent.className = 'ces-addon-modal-content'
+      modalContent.className = 'cpp-addon-modal-content'
 
       // Create content container
       const contentContainer = document.createElement('div')
-      contentContainer.className = 'ces-addon-modal-body'
+      contentContainer.className = 'cpp-addon-modal-body'
 
       // Assemble the modal
       modalContent.appendChild(contentContainer)
