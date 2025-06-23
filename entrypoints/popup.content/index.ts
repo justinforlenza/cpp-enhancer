@@ -8,7 +8,7 @@ export default defineContentScript({
   main(ctx) {
     console.debug('[cpp-addon] popup: script injected')
 
-    const modal = createModalUi(ctx)
+    const modal = createModalUi(ctx, true)
 
     modal.mount()
 

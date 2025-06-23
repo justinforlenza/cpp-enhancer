@@ -1,6 +1,12 @@
+import { createModalUi } from '@/components/modal'
+
 export default defineContentScript({
   matches: ['*://careerpathways.nyc/*'],
   main(ctx) {
+    const modal = createModalUi(ctx, false, 'cpp-addon-control-panel')
+
+    modal.mount()
+
     console.debug('[cpp-addon] control-panel: script injected')
 
     const userDropdown = document.querySelector('#dropdown + .dropdown-menu')
@@ -27,6 +33,9 @@ export default defineContentScript({
 
     settingsBtn.addEventListener('click', (event) => {
       event.preventDefault()
+      if (modal.mounted === undefined) return
+
+      modal.mounted.showModal()
       console.debug('[cpp-addon] control-panel: settings button clicked')
     })
   },
