@@ -37,9 +37,7 @@ jobs:
       
       - name: Build Changelog
         id: changelog
-        uses: mikepenz/release-changelog-builder-action@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: TriPSs/conventional-changelog-action@v5
 
 
   release:
