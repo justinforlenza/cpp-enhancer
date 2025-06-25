@@ -40,7 +40,19 @@ jobs:
         with:
           name: build
 
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with: 
+          git-push: ${{ github.event.inputs.dry_run == 'false' }}
+
       - name: Create Release
+        if: ${{ github.event.inputs.dry_run == 'false' }}
         uses: softprops/action-gh-release@v2
         with:
           files: '*.zip'
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.changelog }}
