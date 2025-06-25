@@ -14,11 +14,9 @@ permissions:
 
 jobs:
   build:
-    if: ${{ github.event.inputs.dry_run == 'false' }}
     uses: ./.github/workflows/build.yml
 
   release:
-    if: ${{ github.event.inputs.dry_run == 'false' }}
     needs: 
       - build
     runs-on: ubuntu-latest
