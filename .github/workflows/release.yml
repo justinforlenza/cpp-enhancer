@@ -14,10 +14,24 @@ permissions:
 
 jobs:
   build:
+    if: ${{ github.event.inputs.dry_run == 'false' }}
     uses: ./.github/workflows/build.yml
 
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   release:
+    if: ${{ github.event.inputs.dry_run == 'false' }}
     needs: 
+      - tag
       - build
     runs-on: ubuntu-latest
     steps:
