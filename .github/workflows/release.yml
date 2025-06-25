@@ -33,7 +33,7 @@ jobs:
         id: app-token
         with:
           app-id: ${{ vars.GH_APP_ID }}
-          private-key: ${{ secrets.GH_APP_SECRET }}
+          private-key: ${{ secrets.GH_APP_PK }}
 
       - name: Build Changelog
         id: changelog
