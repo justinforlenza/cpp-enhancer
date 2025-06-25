@@ -14,7 +14,6 @@ permissions:
 
 jobs:
   build:
-    if: ${{ github.event.inputs.dry_run == 'false' }}
     uses: ./.github/workflows/build.yml
 
   tag:
@@ -23,13 +22,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: main
+      
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ steps.semver.outputs.next }}
 
   release:
-    if: ${{ github.event.inputs.dry_run == 'false' }}
     needs: 
       - tag
       - build
@@ -41,6 +48,7 @@ jobs:
           name: build
 
       - name: Create Release
+        if: ${{ github.event.inputs.dry_run == 'false' }}
         uses: softprops/action-gh-release@v2
         with:
           files: '*.zip'
