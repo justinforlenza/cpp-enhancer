@@ -8,16 +8,17 @@ export default defineContentScript({
   main(ctx) {
     console.debug('[cpp-addon] popup: script injected')
 
-    const modal = createModalUi(ctx, true)
-
-    modal.mount()
+    const ui = createModalUi(ctx, true)
 
     ctx.addEventListener(window, 'click', (event) => {
       console.debug('[cpp-addon] popup: click handled')
 
+      console.debug('[cpp-addon] popup: mounted:', ui.mounted)
+
       if (
-        modal.mounted === undefined ||
-        !(modal.mounted.firstChild instanceof HTMLDivElement)
+        ui.mounted === undefined ||
+        !(ui.mounted.modal instanceof HTMLDialogElement) ||
+        !(ui.mounted.modal.firstChild instanceof HTMLDivElement)
       )
         return
 
@@ -47,9 +48,9 @@ export default defineContentScript({
       currentTabPane.id = `cpp-addon-${originalId}`
       console.debug('[cpp-addon] popup: changed original tab id')
 
-      modal.mounted.firstChild.id = originalId
+      ui.mounted.modal.firstChild.id = originalId
       console.debug('[cpp-addon] popup: updated modal id')
-      modal.mounted.showModal()
+      ui.mounted.modal.showModal()
       console.debug('[cpp-addon] popup: show modal')
       console.debug('[cpp-addon] popup: finished handling click')
     })
