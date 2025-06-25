@@ -6,53 +6,79 @@ const schoolSelectors = [
   'ddlSchoolID',
   'SchoolId',
   'thisSearch.SchoolID',
-].map(name => `select[name="${name}"]`).join(', ')
+]
+  .map((name) => `select[name="${name}"]`)
+  .join(', ')
 
 export default defineContentScript({
   matches: ['*://careerpathways.nyc/*'],
-  main() {
-    console.debug('[ces-addon] default-school: script injected')
+  async main() {
+    console.debug('[cpp-addon] default-school: script injected')
+
+    const enabled = await defaultSchoolEnabled.getValue()
+
+    const defaultSchool = await defaultSchoolValue.getValue()
+
+    if (!enabled) return
+
+    console.debug('[cpp-addon] default-school: feature enabled')
 
     const schoolSelect = document.querySelector(schoolSelectors)
 
-    console.debug('[ces-addon] default-school: selects found:', schoolSelect)
+    console.debug('[cpp-addon] default-school: selects found:', schoolSelect)
 
     if (!(schoolSelect instanceof HTMLSelectElement)) return
 
-    console.debug('[ces-addon] default-school: school select input found')
+    console.debug('[cpp-addon] default-school: school select input found')
 
     console.debug(
-      '[ces-addon] default-school: current value:',
+      '[cpp-addon] default-school: current value:',
       schoolSelect.value,
     )
 
     if (!emptyValues.includes(schoolSelect.value)) return
 
-    console.debug('[ces-addon] default-school: school does not have a value')
+    console.debug('[cpp-addon] default-school: school does not have a value')
 
-    const options = Array.from(schoolSelect.options)
-      .map((option) => option.value)
-      .filter((value) => !emptyValues.includes(value))
+    if (defaultSchool !== null) {
+      console.debug(
+        '[cpp-addon] default-school: default school value found:',
+        defaultSchool,
+      )
+      schoolSelect.value = defaultSchool
+      console.debug(
+        '[cpp-addon] default-school: default school set to:',
+        defaultSchool,
+      )
+    } else {
+      console.debug(
+        '[cpp-addon] default-school: no default school value set, searching for options',
+      )
 
-    if (options.length === 0) return
+      const options = Array.from(schoolSelect.options)
+        .map((option) => option.value)
+        .filter((value) => !emptyValues.includes(value))
 
-    console.debug('[ces-addon] default-school: options found:', options)
+      if (options.length === 0) return
 
-    if (options.length > 1) return
+      console.debug('[cpp-addon] default-school: options found:', options)
 
-    console.debug(
-      '[ces-addon] default-school: only one option found, setting it as default',
-    )
+      if (options.length > 1) return
 
-    schoolSelect.value = options[0]
+      console.debug(
+        '[cpp-addon] default-school: only one option found, setting it as default',
+      )
 
-    console.debug(
-      '[ces-addon] default-school: default school set to:',
-      schoolSelect.value,
-    )
+      schoolSelect.value = options[0]
+
+      console.debug(
+        '[cpp-addon] default-school: default school set to:',
+        schoolSelect.value,
+      )
+    }
 
     schoolSelect.dispatchEvent(new Event('change'))
 
-    console.debug('[ces-addon] default-school: change event dispatched')
+    console.debug('[cpp-addon] default-school: change event dispatched')
   },
 })

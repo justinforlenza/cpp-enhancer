@@ -1,5 +1,6 @@
+
 /* Modal Dialog Styles */
-.ces-addon-modal {
+.cpp-addon-modal {
   padding: 0;
   border: none;
   border-radius: 8px;
@@ -8,14 +9,16 @@
   max-height: 90vh;
   width: 800px;
   background: transparent;
+
+  font-family: sans-serif;
 }
 
-.ces-addon-modal::backdrop {
+.cpp-addon-modal::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
 }
 
-.ces-addon-modal-content {
+.cpp-addon-modal-content {
   background: white;
   border-radius: 8px;
   position: relative;
@@ -24,7 +27,7 @@
   overflow-y: auto;
 }
 
-.ces-addon-modal-close {
+.cpp-addon-modal-close {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -42,27 +45,27 @@
   transition: all 0.2s ease;
 }
 
-.ces-addon-modal-close:hover {
+.cpp-addon-modal-close:hover {
   background-color: #f0f0f0;
   color: #333;
 }
 
-.ces-addon-modal-close:focus {
+.cpp-addon-modal-close:focus {
   outline: 2px solid #007bff;
   outline-offset: 2px;
 }
 
-.ces-addon-modal-body {
+.cpp-addon-modal-body {
   margin-top: 8px;
   line-height: 1.6;
 }
 
 /* Animation for modal appearance */
-.ces-addon-modal[open] {
-  animation: ces-addon-modal-appear 0.2s ease-out;
+.cpp-addon-modal[open] {
+  animation: cpp-addon-modal-appear 0.2s ease-out;
 }
 
-@keyframes ces-addon-modal-appear {
+@keyframes cpp-addon-modal-appear {
   from {
     opacity: 0;
     transform: scale(0.9) translateY(-10px);
@@ -73,14 +76,41 @@
   }
 }
 
+.cpp-addon-modal-header {
+  margin: -24px -24px 20px -24px;
+  padding: 20px 24px 12px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+
+.cpp-addon-modal-header .cpp-addon-modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ces-addon-modal-header .ces-addon-modal-description {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  font-weight: normal;
+}
+
+
+
 /* Responsive design */
 @media (max-width: 600px) {
-  .ces-addon-modal {
+  .cpp-addon-modal {
     width: 95vw;
     margin: 20px auto;
   }
-  
-  .ces-addon-modal-content {
+
+  .cpp-addon-modal-content {
     padding: 20px;
   }
 }
