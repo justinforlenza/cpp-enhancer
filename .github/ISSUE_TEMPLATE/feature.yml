@@ -1,0 +1,76 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature] "
+labels: ["enhancement", "needs-review"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Help us understand what you need.
+
+  - type: textarea
+    id: feature-request
+    attributes:
+      label: What feature would you like?
+      description: Briefly describe the feature you want
+      placeholder: "I would like the extension to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-needed
+    attributes:
+      label: Why do you need this?
+      description: What problem does this solve or workflow does this improve?
+      placeholder: |
+        What's your use case? For example:
+        "I often need to... but currently I have to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: how-it-works
+    attributes:
+      label: How should it work?
+      description: Describe how you imagine using this feature
+      placeholder: |
+        How would you interact with this feature?
+        Where should it appear in the extension?
+        What should happen when you use it?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to you?
+      options:
+        - "Low - Nice to have"
+        - "Medium - Would improve my workflow"
+        - "High - Essential for my use case"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-details
+    attributes:
+      label: Additional details (optional)
+      description: Anything else that would help us understand your request
+      placeholder: |
+        - Screenshots or mockups
+        - Examples from other tools
+        - Alternative solutions you've considered
+        - Who else might find this useful
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched for similar feature requests before creating this one
+          required: true
