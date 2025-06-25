@@ -13,19 +13,12 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    uses: ./.github/workflows/build.yml
-
-  release:
-    needs: 
-      - build
+  tag-and-bump:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.changelog.outputs.tag }}
+      changelog: ${{ steps.changelog.outputs.changelog }}
     steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-
       - uses: actions/create-github-app-token@v2
         id: app-token
         with:
@@ -45,10 +38,25 @@ jobs:
           git-push: ${{ github.event.inputs.dry_run == 'false' }}
           github-token: ${{ steps.app-token.outputs.token }}
 
+  build:
+    needs: tag-and-bump
+    uses: ./.github/workflows/build.yml
+
+  release:
+    needs: 
+      - build
+      - tag-and-bump
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
       - name: Create Release
         if: ${{ github.event.inputs.dry_run == 'false' }}
         uses: softprops/action-gh-release@v2
         with:
           files: '*.zip'
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.changelog }}
+          tag_name: ${{ needs.tag-and-bump.outputs.tag }}
+          body: ${{ needs.tag-and-bump.outputs.changelog }}
