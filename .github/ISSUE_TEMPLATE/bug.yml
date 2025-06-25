@@ -1,0 +1,77 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with the extension
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! Please fill out the information below to help us fix it quickly.
+
+  # - type: input
+  #   id: extension-version
+  #   attributes:
+  #     label: Extension Version
+  #     description: What version of the extension are you using?
+  #     placeholder: "e.g., v1.2.3 (found in extension settings or browser extensions page)"
+  #   validations:
+  #     required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser are you using?
+      options:
+        - Chrome
+        - Firefox
+        - Edge
+        - Safari
+        - Other (specify in description)
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen instead
+      placeholder: |
+        What went wrong? What did you expect to happen?
+        Drag and drop screenshots here
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: How to reproduce
+      description: Tell us the steps to make this bug happen
+      placeholder: |
+        1. Go to...
+        2. Click on...
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional info (optional)
+      description: Screenshots, error messages, or anything else that might help
+      placeholder: |
+        - Screenshots or screen recordings
+        - Console error messages (F12 → Console)
+        - Any other details
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: I searched for similar issues before creating this one
+          required: true
