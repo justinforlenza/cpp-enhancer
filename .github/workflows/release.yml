@@ -35,14 +35,12 @@ jobs:
           tag: ${{ steps.semver.outputs.nextStrict }}
           commit: ${{ github.event.inputs.dry_run == 'false' }}
       
-      - name: Update CHANGELOG
+      - name: Build Changelog
         id: changelog
-        uses: requarks/changelog-action@v1
-        with:
-          writeToFile: false
-          token: ${{ github.token }}
-          toTag: ${{ steps.semver.outputs.next }}
-          fromTag: ${{ steps.semver.outputs.current }}
+        uses: mikepenz/release-changelog-builder-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
   release:
     needs: 
