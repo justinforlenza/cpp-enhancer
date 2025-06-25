@@ -1,25 +1,3 @@
-.navbar-toggler {
-  color: rgba(255,255,255,.5) !important;
-  border: 1px solid rgba(255,255,255, .5) !important;
-
-  span {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
-  }
-}
-
-.dropdown-menu .dropdown-divider {
-  border-top-color: #c6c6c6 !important;
-}
-
-
-@media screen and (max-width: 768px) {
-  .dropdown-menu {
-  .nav-link.text-dark {
-    color: white !important;
-  }
-}
-}
-
 
 /* Modal Dialog Styles */
 .cpp-addon-modal {
@@ -31,6 +9,8 @@
   max-height: 90vh;
   width: 800px;
   background: transparent;
+
+  font-family: sans-serif;
 }
 
 .cpp-addon-modal::backdrop {
@@ -95,6 +75,33 @@
     transform: scale(1) translateY(0);
   }
 }
+
+.cpp-addon-modal-header {
+  margin: -24px -24px 20px -24px;
+  padding: 20px 24px 12px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+}
+
+.cpp-addon-modal-header .cpp-addon-modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ces-addon-modal-header .ces-addon-modal-description {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 8px 0 0 0;
+  line-height: 1.4;
+  font-weight: normal;
+}
+
+
 
 /* Responsive design */
 @media (max-width: 600px) {

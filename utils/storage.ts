@@ -5,10 +5,10 @@ const popupsEnabled = storage.defineItem<boolean>(
   },
 )
 
-const defaultSchool = storage.defineItem<string>(
-  'local:defaultSchool',
+const defaultSchoolValue = storage.defineItem<string | null>(
+  'local:defaultSchoolValue',
   {
-    fallback: '',
+    fallback: null,
   },
 )
 
@@ -29,7 +29,7 @@ const styleTweaksEnabled = storage.defineItem<boolean>(
 
 export {
   popupsEnabled,
-  defaultSchool,
+  defaultSchoolValue,
   defaultSchoolEnabled,
   styleTweaksEnabled
 }

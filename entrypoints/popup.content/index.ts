@@ -16,10 +16,10 @@ export default defineContentScript({
 
     const ui = createModalUi(ctx, {preventClose: true})
 
+    ui.mount()
+
     ctx.addEventListener(window, 'click', (event) => {
       console.debug('[cpp-addon] popup: click handled')
-
-      console.debug('[cpp-addon] popup: mounted:', ui.mounted)
 
       if (
         ui.mounted === undefined ||

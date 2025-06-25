@@ -1,4 +1,4 @@
-import './style.css'
+import './styles.css'
 
 function replaceDividerLinks() {
   console.debug('[cpp-addon] style-tweaks: replaceDividerLinks() begin')
@@ -33,7 +33,7 @@ export default defineContentScript({
   async main() {
     console.debug('[cpp-addon] style-tweaks: script injected')
 
-    const enabled = await popupsEnabled.getValue()
+    const enabled = await styleTweaksEnabled.getValue()
 
     if (!enabled) return
 

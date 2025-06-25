@@ -1,12 +1,9 @@
-import { createModalUi } from '@/components/modal'
+import { createControlPanel } from "@/components/control-panel"
 
 export default defineContentScript({
   matches: ['*://careerpathways.nyc/*'],
-  main(ctx) {
-    const modal = createModalUi(ctx, false, 'cpp-addon-control-panel')
-
-    modal.mount()
-
+  cssInjectionMode: 'ui',
+  async main(ctx) {
     console.debug('[cpp-addon] control-panel: script injected')
 
     const userDropdown = document.querySelector('#dropdown + .dropdown-menu')
@@ -24,19 +21,31 @@ export default defineContentScript({
     const settingsBtn = document.createElement('a')
     settingsBtn.href = '#'
     settingsBtn.className = 'nav-link text-dark'
-    settingsBtn.textContent = 'Enhancer Control Panel'
+    settingsBtn.textContent = '✨ Enhancer Control Panel'
     userDropdown.appendChild(settingsBtn)
 
     console.debug(
       '[cpp-addon] control-panel: open button added to user dropdown',
     )
 
-    settingsBtn.addEventListener('click', (event) => {
-      event.preventDefault()
-      if (modal.mounted === undefined) return
+    const ui = await createControlPanel(ctx)
 
-      modal.mounted.showModal()
+    ui.mount()
+
+    console.debug('[cpp-addon] control-panel: ui mounted')
+
+    settingsBtn.addEventListener('click', (event) => {
       console.debug('[cpp-addon] control-panel: settings button clicked')
+
+      event.preventDefault()
+      if (ui.mounted === undefined || !(ui.mounted.panel instanceof HTMLDialogElement)) return
+
+      console.debug('[cpp-addon] control-panel: dialog is ready')
+
+      ui.mounted.panel.showModal()
+
+      console.debug('[cpp-addon] control-panel: dialog displayed')
+
     })
   },
 })

@@ -17,6 +17,8 @@ export default defineContentScript({
 
     const enabled = await defaultSchoolEnabled.getValue()
 
+    const defaultSchool = await defaultSchoolValue.getValue()
+
     if (!enabled) return
 
     console.debug('[cpp-addon] default-school: feature enabled')
@@ -38,26 +40,42 @@ export default defineContentScript({
 
     console.debug('[cpp-addon] default-school: school does not have a value')
 
-    const options = Array.from(schoolSelect.options)
-      .map((option) => option.value)
-      .filter((value) => !emptyValues.includes(value))
+    if (defaultSchool !== null) {
+      console.debug(
+        '[cpp-addon] default-school: default school value found:',
+        defaultSchool,
+      )
+      schoolSelect.value = defaultSchool
+      console.debug(
+        '[cpp-addon] default-school: default school set to:',
+        defaultSchool,
+      )
+    } else {
+      console.debug(
+        '[cpp-addon] default-school: no default school value set, searching for options',
+      )
 
-    if (options.length === 0) return
+      const options = Array.from(schoolSelect.options)
+        .map((option) => option.value)
+        .filter((value) => !emptyValues.includes(value))
 
-    console.debug('[cpp-addon] default-school: options found:', options)
+      if (options.length === 0) return
 
-    if (options.length > 1) return
+      console.debug('[cpp-addon] default-school: options found:', options)
 
-    console.debug(
-      '[cpp-addon] default-school: only one option found, setting it as default',
-    )
+      if (options.length > 1) return
 
-    schoolSelect.value = options[0]
+      console.debug(
+        '[cpp-addon] default-school: only one option found, setting it as default',
+      )
 
-    console.debug(
-      '[cpp-addon] default-school: default school set to:',
-      schoolSelect.value,
-    )
+      schoolSelect.value = options[0]
+
+      console.debug(
+        '[cpp-addon] default-school: default school set to:',
+        schoolSelect.value,
+      )
+    }
 
     schoolSelect.dispatchEvent(new Event('change'))
 
