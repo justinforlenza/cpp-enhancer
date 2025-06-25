@@ -2,7 +2,7 @@
   "name": "cpp-enhancer",
   "description": "A browser extension to enhance the NYC Career Pathways website",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",

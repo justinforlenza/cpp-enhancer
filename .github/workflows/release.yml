@@ -16,33 +16,8 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
 
-  tag:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Get Next Version
-        id: semver
-        uses: ietf-tools/semver-action@v1
-        with:
-          token: ${{ github.token }}
-          branch: main
-      
-      - name: Bump Version of package.json
-        uses: ramonpaolo/bump-version@v2.3.1
-        with:
-          tag: ${{ steps.semver.outputs.nextStrict }}
-          commit: ${{ github.event.inputs.dry_run == 'false' }}
-      
-      - name: Build Changelog
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v5
-
-
   release:
     needs: 
-      - tag
       - build
     runs-on: ubuntu-latest
     steps:
@@ -51,8 +26,18 @@ jobs:
         with:
           name: build
 
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v5
+        with: 
+          git-push: ${{ github.event.inputs.dry_run == 'false' }}
+
       - name: Create Release
         if: ${{ github.event.inputs.dry_run == 'false' }}
         uses: softprops/action-gh-release@v2
         with:
           files: '*.zip'
+          tag_name: ${{ steps.changelog.outputs.tag }}
