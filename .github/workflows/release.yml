@@ -41,6 +41,8 @@ jobs:
   build:
     needs: tag-and-bump
     uses: ./.github/workflows/build.yml
+    with:
+      ref: ${{ needs.tag-and-bump.outputs.tag }}
 
   release:
     needs: 
