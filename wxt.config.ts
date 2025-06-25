@@ -11,6 +11,7 @@ export default defineConfig({
   },
   manifest: {
     name: 'Career Pathways Enhancer',
+    permissions: ['storage'],
     author: {
       email: 'justin@forlenza.co',
     },

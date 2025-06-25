@@ -30,8 +30,14 @@ function replaceDividerLinks() {
 
 export default defineContentScript({
   matches: ['*://careerpathways.nyc/*'],
-  main() {
+  async main() {
     console.debug('[cpp-addon] style-tweaks: script injected')
+
+    const enabled = await popupsEnabled.getValue()
+
+    if (!enabled) return
+
+    console.debug('[cpp-addon] style-tweaks: feature enabled')
 
     replaceDividerLinks()
   },

@@ -12,8 +12,14 @@ const schoolSelectors = [
 
 export default defineContentScript({
   matches: ['*://careerpathways.nyc/*'],
-  main() {
+  async main() {
     console.debug('[cpp-addon] default-school: script injected')
+
+    const enabled = await defaultSchoolEnabled.getValue()
+
+    if (!enabled) return
+
+    console.debug('[cpp-addon] default-school: feature enabled')
 
     const schoolSelect = document.querySelector(schoolSelectors)
 

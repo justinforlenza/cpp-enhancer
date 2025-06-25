@@ -5,10 +5,16 @@ export default defineContentScript({
     '*://careerpathways.nyc/Students/Index/*',
     '*://careerpathways.nyc/Students/*',
   ],
-  main(ctx) {
+  async main(ctx) {
     console.debug('[cpp-addon] popup: script injected')
 
-    const ui = createModalUi(ctx, true)
+    const enabled = await popupsEnabled.getValue()
+
+    if (!enabled) return
+
+    console.debug('[cpp-addon] popup: feature enabled')
+
+    const ui = createModalUi(ctx, {preventClose: true})
 
     ctx.addEventListener(window, 'click', (event) => {
       console.debug('[cpp-addon] popup: click handled')
