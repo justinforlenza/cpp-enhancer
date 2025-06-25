@@ -32,7 +32,7 @@ jobs:
       - name: Bump Version of package.json
         uses: ramonpaolo/bump-version@v2.3.1
         with:
-          tag: ${{ steps.semver.outputs.next }}
+          tag: ${{ steps.semver.outputs.nextStrict }}
           commit: ${{ github.event.inputs.dry_run == 'false' }}
       
       - name: Update CHANGELOG
@@ -41,7 +41,7 @@ jobs:
         with:
           writeToFile: false
           token: ${{ github.token }}
-          tag: ${{ steps.semver.outputs.next }}
+          toTag: ${{ steps.semver.outputs.nextStrict }}
           fromTag: ${{ steps.semver.outputs.current }}
 
   release:
