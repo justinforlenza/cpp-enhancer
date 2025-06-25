@@ -29,12 +29,20 @@ jobs:
           token: ${{ github.token }}
           branch: main
       
+      - name: Bump Version of package.json
+        uses: ramonpaolo/bump-version@v2.3.1
+        with:
+          tag: ${{ steps.semver.outputs.next }}
+          commit: ${{ github.event.inputs.dry_run == 'false' }}
+      
       - name: Update CHANGELOG
         id: changelog
         uses: requarks/changelog-action@v1
         with:
+          writeToFile: false
           token: ${{ github.token }}
           tag: ${{ steps.semver.outputs.next }}
+          fromTag: ${{ steps.semver.outputs.current }}
 
   release:
     needs: 
