@@ -41,7 +41,7 @@ jobs:
         with:
           writeToFile: false
           token: ${{ github.token }}
-          toTag: ${{ steps.semver.outputs.nextStrict }}
+          toTag: ${{ steps.semver.outputs.next }}
           fromTag: ${{ steps.semver.outputs.current }}
 
   release:
